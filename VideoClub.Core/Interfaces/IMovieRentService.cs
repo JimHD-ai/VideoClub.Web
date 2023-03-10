@@ -11,8 +11,8 @@ namespace VideoClub.Core.Interfaces
     {
         IEnumerable<MovieRent> GetMovieRents();
         MovieRent GetMovieRent(int id);
-        MovieRent GetMovieRentByCustomer(int customerId);
-        bool MovieRentExists(int customerId);
+        MovieRent GetMovieRentByCustomer(string customerId);
+        bool MovieRentExists(string customerId);
         void AddMovieRent(MovieRent movieRent);
         void UpdateMovieRent(MovieRent movieRent);
     }

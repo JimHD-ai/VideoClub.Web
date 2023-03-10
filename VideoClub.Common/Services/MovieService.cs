@@ -10,20 +10,18 @@ using VideoClub.Infrastructure.Data;
 
 namespace VideoClub.Common.Services
 {
-    internal class MovieService : IMovieService
+    public class MovieService : IMovieService
     {
-        private readonly VideoClubDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public MovieService(VideoClubDbContext dbContext)
+        public MovieService(ApplicationDbContext dbContext)
         {
             _context = dbContext;
         }
 
         public IEnumerable<Movie> GetMovies()
         {
-            return from m in _context.Movies
-                   orderby m.Title
-                   select m;
+            return _context.Movies.OrderBy(m =>m.Title);
         }
 
         public Movie GetMovie(int id)

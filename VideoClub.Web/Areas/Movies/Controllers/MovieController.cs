@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using VideoClub.Core.Interfaces;
+using VideoClub.Web.Areas.Movies.Models;
 
 namespace VideoClub.Web.Areas.Movies.Controllers
 {
@@ -15,7 +16,7 @@ namespace VideoClub.Web.Areas.Movies.Controllers
         private readonly IMovieCopyService _movieCopyDb;
         private readonly IMovieRentService _movieRentDb;
 
-        public MovieController(IMovieService movieDb, IMovieCopyService movieCopyDb, IMovieRentService movieRentDb ) 
+        public MovieController(IMovieService movieDb, IMovieCopyService movieCopyDb, IMovieRentService movieRentDb)
         {
             _movieDb = movieDb;
             _movieCopyDb = movieCopyDb;
@@ -23,7 +24,7 @@ namespace VideoClub.Web.Areas.Movies.Controllers
         }
 
         [HttpGet]
-        public async Task<ViewResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.TitleSortParm = String.IsNullOrEmpty(sortOrder) ? "titleDesc" : "";
             ViewBag.ReleaseDateSortParm = sortOrder == "genre" ? "genreDesc" : "genre";
@@ -41,13 +42,13 @@ namespace VideoClub.Web.Areas.Movies.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var movies = await _movieDb.GetMovies();
+            var movies = _movieDb.GetMovies();
 
             //SearchBox
             if (!String.IsNullOrEmpty(searchString))
             {
                 movies = movies.Where(m => m.Title.Contains(searchString)
-                                                      || m.Genre.Contains(searchString));
+                                                      || m.Genre.ToString().Contains(searchString));
             }
 
             //Filtering
@@ -67,21 +68,30 @@ namespace VideoClub.Web.Areas.Movies.Controllers
                     break;
             }
 
-            [Authorize(Roles = "Admin")]
-            [HttpGet]
+            return View(movies);
+        }
 
-            public ActionResult Edit(string id)
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var movie = _movieDb.GetMovie(id);
+
+            if (movie == null)
             {
-                var movie = _movieDb.GetMovie(id);
-
-                if (movie == null)
-                {
-                    return HttpNotFound();
-                }
-
-                var model = new MovieBindingModel(movie.Id, movie.Title, movie.Description, movie.Genre);
-                return View(model);
+                return HttpNotFound();
             }
+
+            var model = new MovieBindingModel(movie.Id, movie.Title, movie.Description, movie.Genre);
+            return View(model);
         }
     }
 }

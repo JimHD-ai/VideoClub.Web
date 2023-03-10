@@ -12,9 +12,9 @@ namespace VideoClub.Common.Services
 {
     public class MovieRentServices : IMovieRentService
     {
-        private readonly VideoClubDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public MovieRentServices(VideoClubDbContext dbContext)
+        public MovieRentServices(ApplicationDbContext dbContext)
         {
             _context = dbContext;
         }
@@ -31,12 +31,12 @@ namespace VideoClub.Common.Services
             return _context.MovieRents.Find(id);
         }
 
-        public MovieRent GetMovieRentByCustomer(int customerId)
+        public MovieRent GetMovieRentByCustomer(string customerId)
         {
             return _context.MovieRents.FirstOrDefault(m => m.Customer.Id == customerId);
         }
 
-        public bool MovieRentExists(int customerId)
+        public bool MovieRentExists(string customerId)
         {
             var movieRent = _context.MovieRents.FirstOrDefault(m => m.Customer.Id == customerId);
             return movieRent != null;

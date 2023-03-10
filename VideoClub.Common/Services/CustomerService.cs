@@ -13,39 +13,39 @@ namespace VideoClub.Common.Services
 {
     public class CustomerService : ICustomerService
     {
-        private readonly VideoClubDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CustomerService(VideoClubDbContext dbContext)
+        public CustomerService(ApplicationDbContext dbContext)
         {
             _context = dbContext;
         }
 
         public IEnumerable<Customer> GetCustomers()
         {
-            return from c in _context.Customers
-                   orderby c.Name
+            return from c in _context.Users
+                   orderby c.FirstName
                    select c;
         }
 
         public Customer GetCustomer(int id)
         {
-            return _context.Customers.Find(id);
+            return _context.Users.Find(id);
         }
 
         public Customer GetCustomerByName(string name) 
         { 
-            return _context.Customers.FirstOrDefault(c => c.Name == name);
+            return _context.Users.FirstOrDefault(c => c.FirstName == name);
         }
 
         public bool CustomerExists(string name)
         {
-            var customer = _context.Customers.FirstOrDefault(c => c.Name == name);
+            var customer = _context.Users.FirstOrDefault(c => c.FirstName == name);
             return customer != null;
         }
 
         public void AddCustomer(Customer customer)
         {
-            _context.Customers.Add(customer);
+            _context.Users.Add(customer);
             _context.SaveChanges();
         }
 
@@ -58,9 +58,9 @@ namespace VideoClub.Common.Services
 
         public void DeleteCustomer(int id)
         {
-            var customer = _context.Customers.Find(id);
+            var customer = _context.Users.Find(id);
             if (customer == null) return;
-            _context.Customers.Remove(customer);
+            _context.Users.Remove(customer);
             _context.SaveChanges();
         }
 

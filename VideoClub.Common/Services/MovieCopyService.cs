@@ -11,9 +11,9 @@ namespace VideoClub.Common.Services
 {
     public class MovieCopyService : IMovieCopyService
     {
-        private readonly VideoClubDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public MovieCopyService(VideoClubDbContext context)
+        public MovieCopyService(ApplicationDbContext context)
         {
             _context = context;
         }

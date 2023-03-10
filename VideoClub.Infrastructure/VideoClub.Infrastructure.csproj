@@ -125,7 +125,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\VideoClubDbContext.cs" />
+    <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -136,10 +136,6 @@
     <ProjectReference Include="..\VideoClub.Core\VideoClub.Core.csproj">
       <Project>{81B1FB54-3F38-4DEA-8D7A-1FC6E5C02951}</Project>
       <Name>VideoClub.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VideoClub.Web\VideoClub.Web.csproj">
-      <Project>{20D908FD-47D6-4ABD-AA33-9C89BF1B48C7}</Project>
-      <Name>VideoClub.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

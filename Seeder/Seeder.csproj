@@ -92,6 +92,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VideoClub.Core\VideoClub.Core.csproj">
+      <Project>{81B1FB54-3F38-4DEA-8D7A-1FC6E5C02951}</Project>
+      <Name>VideoClub.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoClub.Infrastructure\VideoClub.Infrastructure.csproj">
       <Project>{7A747725-201F-4819-9FAE-C663D343B820}</Project>
       <Name>VideoClub.Infrastructure</Name>

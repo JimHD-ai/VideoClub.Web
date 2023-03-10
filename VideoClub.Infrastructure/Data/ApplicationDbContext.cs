@@ -1,25 +1,19 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VideoClub.Core.Entities;
-using VideoClub.Web.Models;
 
 namespace VideoClub.Infrastructure.Data
 {
-    public class VideoClubDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<Customer>
     {
-        public VideoClubDbContext()
+        public ApplicationDbContext() 
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
-        public static VideoClubDbContext Create()
+        public static ApplicationDbContext Create()
         {
-            return new VideoClubDbContext();
+            return new ApplicationDbContext();
         }
 
         public DbSet<Customer> Customers { get; set; }

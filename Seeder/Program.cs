@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using VideoClub.Core.Entities;
 using VideoClub.Infrastructure.Data;
 using VideoClub.Web.Models;
 
@@ -14,17 +15,17 @@ namespace Seeder
 {
     internal class Program
     {
-        public static void CreateDefaultRolesAndUsers(VideoClubDbContext dbContext)
+        public static void CreateDefaultRolesAndUsers(ApplicationDbContext dbContext)
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbContext));
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(dbContext));
+            var userManager = new UserManager<Customer>(new UserStore<Customer>(dbContext));
             var role = new IdentityRole();
             if (!roleManager.RoleExists("Admin"))
             {
                 role.Name = "Admin";
                 roleManager.Create(role);
 
-                var user = new ApplicationUser();
+                var user = new Customer();
                 const string userName = "admin@google.gr";
 
                 user.UserName = userName;
@@ -52,7 +53,7 @@ namespace Seeder
 
         static void Main(string[] args)
         {
-            var context = new VideoClubDbContext();
+            var context = new VideoClub.Infrastructure.Data.ApplicationDbContext();
             CreateDefaultRolesAndUsers(context);
         }
     }
